@@ -1,5 +1,7 @@
 # TT-SPN: Twin Transformers with Sinusoidal Representation Networks for Video Instance Segmentation
 
+Object Detection and Instance Segmentation version of TT-SPN
+
 Video instance segmentation is the recently introduced computer vision research are that aims joint detection, segmentation and tracking of instances in the video domain. Recent methods proposed highly sophisticated and multi-stage networks that lead to be unusable in practise. Hence, simple yet effective single stage approaches are needed to be used in practise. To fill the gap, we propose end-to-end transformer based video instance segmentation module with Sinusoidal Representation Networks (SPN), namely TT-SPN, to address this problem. TT-SPN, views the VIS task as direct sequence prediction problem in single stage that enables us to aggregate temporal information with spatial one.
 
 ![TT-SPN](https://github.com/cankocagil/TT-SPN/blob/main/figures/Pipeline.png?raw=true)
@@ -14,60 +16,35 @@ We provide installation quidelines for TT-SPN.
 First, clone our project page as follows.
 
 ```
-git clone https://github.com/cankocagil/TT-SPN.git
+git clone https://github.com/cankocagil/TT-SPN---Object-Detection
 ```
 
-We highly recommend the installation of PyTorch and Torchvision beforehand:
-
+Then, install PyTorch 1.5+ and torchvision 0.6+:
 ```
 conda install -c pytorch pytorch torchvision
 ```
-
-Then, install packages from requirements file:
-
+Install pycocotools (for evaluation on COCO) and scipy (for training):
 ```
-pip install -r requirements.txt
-```
-
-Compile Deformable Convolution module(requires GCC>=5.3, cuda>=10.0)
-
-```
-cd models/dcn
-python setup.py build_ext --inplace
-```
-
+conda install cython scipy
+pip install -U 'git+https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI'
 # Data Preparation
 
-Download and extract 2019 version of YoutubeVIS  train and val images with annotations from
-[CodeLab](https://competitions.codalab.org/competitions/20128#participate-get_data) or [YoutubeVIS](https://youtube-vos.org/dataset/vis/).
-TT-SPN expects the following directory structure.
+Download and extract COCO 2017 train and val images with annotations from
+[http://cocodataset.org](http://cocodataset.org/#download).
+We expect the directory structure to be the following:
 ```
-TT-SPN
-├── data
-│   ├── train
-│   ├── val
-│   ├── annotations
-│   │   ├── instances_train_sub.json
-│   │   ├── instances_val_sub.json
-├── models
-...
+path/to/coco/
+  annotations/  # annotation json files
+  train2017/    # train images
+  val2017/      # val images
 ```
 
-# Training
-
-Training of the model requires at least 8g memory GPU, we performed the experiment on 8g Tesla K80 card. 
-
-To train baseline TT-SPN on a single node with n gpus for 18 epochs, run:
-
+## Training
+To train baseline DETR on a single node with n gpus for 300 epochs run:
 ```
-python -m torch.distributed.launch --nproc_per_node=n --use_env main.py --ytvos_path /path/to/ytvos --masks
+python -m torch.distributed.launch --nproc_per_node=n --use_env main.py --coco_path /path/to/coco 
 ```
 
-# Inference
-
-```
-python inference.py --masks --model_path /path/to/model_weights --save_path /path/to/results.json
-```
 
 # Acknowledgement
 We would like to thank the [VisTR](https://github.com/Epiphqny/VisTR) and [DETR](https://github.com/facebookresearch/detr) open-source projects for their awesome work, part of the code are modified from their projects.
