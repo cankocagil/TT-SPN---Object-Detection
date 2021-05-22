@@ -1,6 +1,6 @@
 # TT-SPN: Twin Transformers with Sinusoidal Representation Networks for Video Instance Segmentation
 
-Object Detection and Instance Segmentation version of TT-SPN
+## Object Detection and Instance Segmentation version of TT-SPN
 
 Video instance segmentation is the recently introduced computer vision research are that aims joint detection, segmentation and tracking of instances in the video domain. Recent methods proposed highly sophisticated and multi-stage networks that lead to be unusable in practise. Hence, simple yet effective single stage approaches are needed to be used in practise. To fill the gap, we propose end-to-end transformer based video instance segmentation module with Sinusoidal Representation Networks (SPN), namely TT-SPN, to address this problem. TT-SPN, views the VIS task as direct sequence prediction problem in single stage that enables us to aggregate temporal information with spatial one.
 
@@ -27,6 +27,8 @@ Install pycocotools (for evaluation on COCO) and scipy (for training):
 ```
 conda install cython scipy
 pip install -U 'git+https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI'
+```
+
 # Data Preparation
 
 Download and extract COCO 2017 train and val images with annotations from
