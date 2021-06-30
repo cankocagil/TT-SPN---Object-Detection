@@ -42,7 +42,7 @@ path/to/coco/
 ```
 
 ## Training
-To train baseline DETR on a single node with n gpus for 300 epochs run:
+To train baseline TT-SPN on a single node with n gpus for 300 epochs run:
 ```
 python -m torch.distributed.launch --nproc_per_node=n --use_env main.py --coco_path /path/to/coco 
 ```
